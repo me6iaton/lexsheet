@@ -1,0 +1,23 @@
+{
+  "name": "lexsheet",
+  "version": "0.0.1",
+  "description": "tool for import and export remote csv sheet to lexicon.json",
+  "bin": "./index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/me6iaton/lexsheet.git"
+  },
+  "keywords": [
+    "csv",
+    "localization"
+  ],
+  "author": "me6iaton@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/me6iaton/lexsheet/issues"
+  },
+  "homepage": "https://github.com/me6iaton/lexsheet#readme"
+}
