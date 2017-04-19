@@ -1,7 +1,7 @@
 {
   "name": "lexsheet",
   "version": "0.1.1",
-  "description": "tool for import and export remote csv sheet to lexicon.json",
+  "description": "tool for import and export google sheet to lexicon.json",
   "main": "index.js",
   "bin": {
     "lexsheet": "./bin/lexsheet"
@@ -14,8 +14,20 @@
     "url": "git+https://github.com/me6iaton/lexsheet.git"
   },
   "keywords": [
-    "csv",
-    "localization"
+    "globalization",
+    "google sheets",
+    "google",
+    "google",
+    "internationalization",
+    "locale",
+    "localization",
+    "localization",
+    "sheets",
+    "spreadsheet",
+    "spreadsheets",
+    "spreadsheets",
+    "translate",
+    "translation"
   ],
   "author": "me6iaton@gmail.com",
   "license": "MIT",
