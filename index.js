@@ -4,6 +4,7 @@ const https = require('https');
 const packageJson = require('./package.json');
 const parse = require('csv-parse');
 const program = require('commander');
+const git = require('simple-git')()
 
 // extend commander
 Object.getPrototypeOf(program).missingArgument = function(name) {
@@ -19,7 +20,7 @@ const parser = parse({delimiter: ','})
 program
   .version(packageJson.version)
 
-function writeLexicon(sheet, path) {
+function createLexicon(sheet) {
   const lexicon = {};
   const head = sheet.shift();
   const langs = head.slice(3);
@@ -36,35 +37,39 @@ function writeLexicon(sheet, path) {
     if (!lexicon[lang][namespace]) lexicon[lang][namespace] = {};
     lexicon[lang][namespace][key] = cell;
   }))
-  fs.writeFile(path, JSON.stringify(lexicon, null, 2), (err) => {
-    if (err) throw err;
-  });
+  return JSON.stringify(lexicon, null, 2)
 }
 
 program
   .command('import <relative_path> <google_id>')
   .alias('i')
   .description('import <google_id> sheet and save lexicon to <relative_path>')
-  .action(function(relative_path, google_id){
+  .option('-a, --add_commit_push <message>', 'export changes to remote repository')
+  .action(function(relative_path, google_id, options){
     const url = `https://docs.google.com/spreadsheets/d/${google_id}/export?format=csv`
     const sheet = []
     https.get(url, (res) => {
       res.pipe(parser)
         .on('data', (data) => {sheet.push(data)})
-        .on('end', () => writeLexicon(sheet, relative_path))
-        .on('error', (e) => {
-          console.error("CSV parse error: " + e.message);
-        });
-    }).on('error', (e) => {
-      console.error("Fetch error: " + e.message);
-    });
+        .on('end', () => {
+          fs.writeFile(relative_path, createLexicon(sheet), (err) => {
+            if (err) throw err;
+            if (options.add_commit_push) {
+              git
+               .add('./*')
+               .commit(options.add_commit_push)
+               .push('origin', 'master');
+            }
+          });
+        })
+        .on('error', (e) => {console.error("CSV parse error: " + e.message)});
+    }).on('error', (e) => {console.error("Fetch error: " + e.message)});
   });
 
 program
   .command('export <relative_path> <google_id>')
   .alias('e')
   .description('read lexicon from <relative_path> and export to <google_id> sheet')
-  .option('-acp, --add_commit_push', 'export changes to remote repository')
   .action(function(relative_path, google_id){
     console.log('not work let');
   });
@@ -73,8 +78,8 @@ program
 program.on('--help', function(){
   console.log('  Examples:');
   console.log('');
-  console.log('    lexsheet import ./lexicon.json XXX');
-  console.log('    lexsheet export -acp ./lexicon.json XXX');
+  console.log('    lexsheet import ./lexicon.json XXX -a "test commit message"');
+  console.log('    lexsheet export ./lexicon.json XXX');
   console.log('');
 });
 

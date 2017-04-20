@@ -1,6 +1,6 @@
 {
   "name": "lexsheet",
-  "version": "0.1.2",
+  "version": "0.2.1",
   "description": "tool for import and export google sheet to lexicon.json",
   "main": "index.js",
   "bin": {
@@ -37,6 +37,7 @@
   "homepage": "https://github.com/me6iaton/lexsheet#readme",
   "dependencies": {
     "commander": "^2.9.0",
-    "csv-parse": "^1.2.0"
+    "csv-parse": "^1.2.0",
+    "simple-git": "^1.70.0"
   }
 }

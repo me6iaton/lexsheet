@@ -12,7 +12,7 @@ npm install lexsheet -g
 
 ```
 lexsheet -h
-lexsheet import ./lexicon.json XXX
+lexsheet import ./lexicon.json XXX -a "test commit message"
 lexsheet export -acp ./lexicon.json XXX
 ```
 
