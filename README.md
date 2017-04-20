@@ -13,7 +13,7 @@ npm install lexsheet -g
 ```
 lexsheet -h
 lexsheet import ./lexicon.json XXX -a "test commit message"
-lexsheet export -acp ./lexicon.json XXX
+lexsheet export ./lexicon.json XXX
 ```
 
 ## google sheet format

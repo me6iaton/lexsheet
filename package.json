@@ -1,6 +1,6 @@
 {
   "name": "lexsheet",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "tool for import and export google sheet to lexicon.json",
   "main": "index.js",
   "bin": {
