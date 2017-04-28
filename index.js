@@ -20,10 +20,11 @@ const parser = parse({delimiter: ','})
 program
   .version(packageJson.version)
 
-function createLexicon(sheet) {
+function createLexicon(sheet, stubLang) {
   const lexicon = {};
   const head = sheet.shift();
   const langs = head.slice(3);
+  const stubLangIndex = head.findIndex(lang => lang == stubLang);
   if (
     head[0] !== 'namespace' ||
     head[1] !== 'key' ||
@@ -35,7 +36,7 @@ function createLexicon(sheet) {
     let key = row[1];
     if (!lexicon[lang]) lexicon[lang] = {};
     if (!lexicon[lang][namespace]) lexicon[lang][namespace] = {};
-    lexicon[lang][namespace][key] = cell;
+    lexicon[lang][namespace][key] = cell.length ? cell : row[stubLangIndex];
   }))
   return JSON.stringify(lexicon, null, 2)
 }
@@ -44,6 +45,7 @@ program
   .command('import <relative_path> <google_id>')
   .alias('i')
   .description('import <google_id> sheet and save lexicon to <relative_path>')
+  .option('-s, --stub_lang [lang]', 'stub lang for filling empty lang cells', 'en')
   .option('-a, --add_commit_push <message>', 'export changes to remote repository')
   .action(function(relative_path, google_id, options){
     const url = `https://docs.google.com/spreadsheets/d/${google_id}/export?format=csv`
@@ -52,7 +54,7 @@ program
       res.pipe(parser)
         .on('data', (data) => {sheet.push(data)})
         .on('end', () => {
-          fs.writeFile(relative_path, createLexicon(sheet), (err) => {
+          fs.writeFile(relative_path, createLexicon(sheet, options.stub_lang), (err) => {
             if (err) throw err;
             if (options.add_commit_push) {
               git
