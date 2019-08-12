@@ -39,6 +39,10 @@ function createLexicon(sheet, stubLang) {
   sheet.forEach(row => row.slice(3).forEach((cell, index) => {
     let lang = langs[index];
 
+    if (!lang || lang.includes('_off')) {
+      return;
+    }
+
     let namespace = row[0];
     let key       = row[1];
 
