@@ -1,8 +1,8 @@
-# lexsheet
+# Lexsheet
 
-tool for import and export google sheet to lexicon.json
+Tool for import and export google sheet to lexicon.json
 
-## install
+## Install
 
 ```
 npm install lexsheet -g
@@ -16,13 +16,13 @@ lexsheet import ./lexicon.json XXX -a "test commit message"
 lexsheet export ./lexicon.json XXX
 ```
 
-## google sheet format
+## Google sheet format
 
-| namespace  	| key  	| description 	| en   	| ru   	| ...  |
-|------------	|------	|-------------	|------	|------	|----- |
-| namespace1 	| key1 	|             	| en 	  | ru 	  | ...  |
-| namespace1 	| key2 	|             	| en 	  | ru 	  | ...  |
-| namespace2 	| key1 	|             	| en 	  | ru 	  | ...	 |
+| namespace   | key   | description   | en    | ru    | ...  |
+|------------ |------ |-------------  |------ |------ |----- |
+| namespace1  | key1  |               | en    | ru    | ...  |
+| namespace1  | key2  |               | en    | ru    | ...  |
+| namespace2  | key1  |               | en    | ru    | ...  |
 
 
 ## Lexicon format
@@ -49,3 +49,10 @@ lexsheet export ./lexicon.json XXX
   }
 }
 ```
+
+## Exclude language from export
+
+Use "_off" as suffix for language name to exclude it from exported json
+
+Example:
+> en_off
