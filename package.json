@@ -37,7 +37,7 @@
   "homepage": "https://github.com/me6iaton/lexsheet#readme",
   "dependencies": {
     "commander": "^2.9.0",
-    "csv-parse": "^1.2.0",
+    "csv-parse": "^4.6.5",
     "simple-git": "^1.70.0"
   }
 }
